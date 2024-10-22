@@ -8,10 +8,10 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.lightBlue[100], // Light blue background
+      backgroundColor: Theme.of(context).colorScheme.surface, 
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: Colors.lightBlue[100], // Match app bar to background
+        backgroundColor: Theme.of(context).colorScheme.surface, // Match app bar to background
         automaticallyImplyLeading: false,
         title: Row(
           children: [
@@ -42,9 +42,9 @@ class HomePage extends StatelessWidget {
             TextField(
               decoration: InputDecoration(
                 prefixIcon: const Icon(Icons.search),
-                hintText: 'Hinted search text',
+                hintText: 'Bus or max stop address',
                 filled: true,
-                fillColor: Colors.white,
+                fillColor: Theme.of(context).colorScheme.onPrimary, // Use theme color
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(25.0),
                   borderSide: BorderSide.none,
@@ -59,29 +59,25 @@ class HomePage extends StatelessWidget {
                   onPressed: () {
                     // Define Sort button action
                   },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
-                  ),
                   child: const Text('Sort'),
                 ),
                 const SizedBox(width: 10),
                 ElevatedButton(
                   onPressed: () {
-                    // Navigate to the Safety Report page when tapped 
+                    // Navigate to the Safety Report page when tapped
                     Navigator.push(
-                      context, 
-                      MaterialPageRoute(builder: (context) =>  const SafetyReport(),
-                      ),
+                      context,
+                      MaterialPageRoute(builder: (context) => const SafetyReport()),
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.redAccent,
+                    backgroundColor: Colors.redAccent, // Custom color override
                   ),
                   child: const Text('Make a Report'),
                 ),
               ],
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             // Transit Stops Near Me Section
             const Text(
               'Transit Stops Near Me',
@@ -91,43 +87,95 @@ class HomePage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10),
-            // Dummy Cards for Transit Stops
-            Expanded(
-              child: GridView.count(
-                crossAxisCount: 2,
-                crossAxisSpacing: 16,
-                mainAxisSpacing: 16,
+            // Row of horizontally scrollable transit stops
+            SizedBox(
+              height: 150,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
                 children: List.generate(4, (index) {
                   return GestureDetector(
                     onTap: () {
-                      //Navigate to the bus details page when a card is tapped
+                      // Navigate to the bus details page when a card is tapped
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const TransitDetailsPage(busNumber: '12'),
+                        MaterialPageRoute(
+                          builder: (context) => const TransitDetailsPage(busNumber: '12'),
                         ),
                       );
                     },
-                   child: Container(
-                    color: Colors.blue,
-                    child: const Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.directions_bus,
-                          size: 50,
-                          color: Colors.white,
-                        ),
-                        SizedBox(height: 8),
-                        Text(
-                          '12',
-                          style: TextStyle(
-                            fontSize: 24,
+                    child: Container(
+                      width: 120,
+                      margin: const EdgeInsets.symmetric(horizontal: 8.0),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.primary, // Use theme color
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: const Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.directions_bus,
+                            size: 50,
                             color: Colors.white,
                           ),
-                        ),
-                      ],
+                          SizedBox(height: 8),
+                          Text(
+                            '12',
+                            style: TextStyle(
+                              fontSize: 24,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                   ),
+                  );
+                }),
+              ),
+            ),
+            const SizedBox(height: 20),
+            // Another Row of horizontally scrollable transit stops (if needed)
+            SizedBox(
+              height: 150,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: List.generate(4, (index) {
+                  return GestureDetector(
+                    onTap: () {
+                      // Navigate to the bus details page when a card is tapped
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const TransitDetailsPage(busNumber: '14'),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      width: 120,
+                      margin: const EdgeInsets.symmetric(horizontal: 8.0),
+                      decoration: BoxDecoration(
+                        color: Colors.orange, // Custom color override
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: const Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.directions_bus,
+                            size: 50,
+                            color: Colors.white,
+                          ),
+                          SizedBox(height: 8),
+                          Text(
+                            '14',
+                            style: TextStyle(
+                              fontSize: 24,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   );
                 }),
               ),

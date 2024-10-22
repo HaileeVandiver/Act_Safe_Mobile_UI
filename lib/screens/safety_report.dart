@@ -5,7 +5,7 @@ import 'dart:convert';
 class SafetyReport extends StatelessWidget {
   const SafetyReport({Key? key}) : super(key: key);
 
-  Future<void> sendSafetyReport(String safetyStatus) async {
+  Future<void> sendSafetyReport(BuildContext context, String safetyStatus) async {
     const String apiUrl = "https://8dt3ectcia.execute-api.us-west-2.amazonaws.com/Test/ActSafeDbManager";
 
     try {
@@ -24,14 +24,19 @@ class SafetyReport extends StatelessWidget {
 
       if (response.statusCode == 200) {
         // Handle successful response
+        Future.delayed(Duration.zero, () {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Thank you for your feedback!')),
+          );
+        });
         print('Record inserted successfully.');
       } else {
         // Handle server error
-        print('Failed to insert record: \${response.statusCode}');
+        print('Failed to insert record: ${response.statusCode}');
       }
     } catch (e) {
       // Handle any errors
-      print('Error: \$e');
+      print('Error: $e');
     }
   }
 
@@ -39,19 +44,19 @@ class SafetyReport extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Safety Report'),
+        title: const Text('Safety Report'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SizedBox(height: 20),
-            Text(
+            const SizedBox(height: 20),
+            const Text(
               'How safe are you feeling right now?',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 40),
+            const SizedBox(height: 40),
             // Safety Buttons
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -61,17 +66,17 @@ class SafetyReport extends StatelessWidget {
                     ElevatedButton(
                       onPressed: () {
                         // Action for "Very Safe"
-                        sendSafetyReport("Green");
+                        sendSafetyReport(context, "Green");
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.green,
-                        shape: CircleBorder(),
-                        padding: EdgeInsets.all(24),
+                        shape: const CircleBorder(),
+                        padding: const EdgeInsets.all(24),
                       ),
-                      child: Icon(Icons.check, color: Colors.white),
+                      child: const Icon(Icons.check, color: Colors.white),
                     ),
-                    SizedBox(height: 8),
-                    Text('Very Safe'),
+                    const SizedBox(height: 8),
+                    const Text('Very Safe'),
                   ],
                 ),
                 Column(
@@ -79,17 +84,17 @@ class SafetyReport extends StatelessWidget {
                     ElevatedButton(
                       onPressed: () {
                         // Action for "Somewhat Safe"
-                        sendSafetyReport("yellow");
+                        sendSafetyReport(context, "Yellow");
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.yellow,
-                        shape: CircleBorder(),
-                        padding: EdgeInsets.all(24),
+                        shape: const CircleBorder(),
+                        padding: const EdgeInsets.all(24),
                       ),
-                      child: Icon(Icons.remove, color: Colors.white),
+                      child: const Icon(Icons.remove, color: Colors.white),
                     ),
-                    SizedBox(height: 8),
-                    Text('Somewhat Safe'),
+                    const SizedBox(height: 8),
+                    const Text('Somewhat Safe'),
                   ],
                 ),
                 Column(
@@ -97,45 +102,45 @@ class SafetyReport extends StatelessWidget {
                     ElevatedButton(
                       onPressed: () {
                         // Action for "Unsafe"
-                        sendSafetyReport("red");
+                        sendSafetyReport(context, "Red");
                       },
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.red,
-                        shape: CircleBorder(),
-                        padding: EdgeInsets.all(24),
+                        shape: const CircleBorder(),
+                        padding: const EdgeInsets.all(24),
                       ),
-                      child: Icon(Icons.close, color: Colors.white),
+                      child: const Icon(Icons.close, color: Colors.white),
                     ),
-                    SizedBox(height: 8),
-                    Text('Unsafe'),
+                    const SizedBox(height: 8),
+                    const Text('Unsafe'),
                   ],
                 ),
               ],
             ),
-            Spacer(),
+            const Spacer(),
             // Contact Buttons
             ElevatedButton(
               onPressed: () {
                 // Define action to contact TriMet
               },
-              child: Text('Contact TriMet'),
+              child: const Text('Contact TriMet'),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blue,
-                minimumSize: Size(double.infinity, 50),
+                minimumSize: const Size(double.infinity, 50),
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () {
                 // Define action to contact NonEmergency Services
               },
-              child: Text('Contact NonEmergency Services'),
+              child: const Text('Contact NonEmergency Services'),
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.blue,
-                minimumSize: Size(double.infinity, 50),
+                minimumSize: const Size(double.infinity, 50),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
           ],
         ),
       ),
