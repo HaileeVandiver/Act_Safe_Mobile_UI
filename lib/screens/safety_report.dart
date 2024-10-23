@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class SafetyReport extends StatelessWidget {
+  final String busNumber = '12';
   const SafetyReport({Key? key}) : super(key: key);
 
   Future<void> sendSafetyReport(BuildContext context, String safetyStatus) async {
@@ -32,11 +33,11 @@ class SafetyReport extends StatelessWidget {
         print('Record inserted successfully.');
       } else {
         // Handle server error
-        print('Failed to insert record: ${response.statusCode}');
+        print('Failed to insert record: \${response.statusCode}');
       }
     } catch (e) {
       // Handle any errors
-      print('Error: $e');
+      print('Error: \$e');
     }
   }
 
@@ -51,6 +52,31 @@ class SafetyReport extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            // Display the bus number at the top
+            Card(
+              color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Icon(
+                      Icons.directions_bus,
+                      size: 40,
+                      color: Colors.black,
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      'Bus Number: 12',
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
             const SizedBox(height: 20),
             const Text(
               'How safe are you feeling right now?',
